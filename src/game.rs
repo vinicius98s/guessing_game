@@ -2,6 +2,7 @@ use crate::config::Config;
 use colored::*;
 use rand::{thread_rng, Rng};
 use std::{
+    cmp::Ordering,
     io::{self, Write},
     ops::RangeInclusive,
 };
@@ -101,12 +102,10 @@ pub fn check_restart_game() -> bool {
 
 /// Checks whether the user guess is correct or not.
 /// Also prints if is too low or too high.
-fn output_guess(guess: u8, correct: u8) -> () {
-    if guess < correct {
-        println!("{}", "\nToo low!".yellow());
-    } else if guess > correct {
-        println!("{}", "\nToo high!".yellow());
-    } else {
-        println!("{}", "\nYou got it. Congrats!".green());
+fn output_guess(guess: u8, correct: u8) {
+    match guess.cmp(&correct) {
+        Ordering::Equal => println!("{}", "\nYou got it. Congrats!".green()),
+        Ordering::Less => println!("{}", "\nToo low!".yellow()),
+        Ordering::Greater => println!("{}", "\nToo high!".yellow()),
     }
 }

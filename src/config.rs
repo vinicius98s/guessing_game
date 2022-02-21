@@ -18,8 +18,7 @@ fn get_retries(args: Vec<String>) -> i32 {
     match range.last() {
         Some(value) => {
             let split: Vec<&str> = value.split(&"--retries=".to_string()).collect();
-            let retries_value = split[1].parse::<i32>().unwrap_or(RETRIES_DEFAULT_VALUE);
-            retries_value
+            split[1].parse::<i32>().unwrap_or(RETRIES_DEFAULT_VALUE)
         }
         _ => RETRIES_DEFAULT_VALUE,
     }
